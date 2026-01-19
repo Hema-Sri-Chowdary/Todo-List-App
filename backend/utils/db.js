@@ -20,15 +20,17 @@ const connectDB = async () => {
         });
 
         // Graceful shutdown
-        process.on('SIGINT', async () => {
-            await mongoose.connection.close();
-            console.log('MongoDB connection closed through app termination');
-            process.exit(0);
-        });
+        // Graceful shutdown (Not needed for serverless, usually for long running containers)
+        /*process.on('SIGINT', async () => {
+             await mongoose.connection.close();
+             console.log('MongoDB connection closed through app termination');
+             process.exit(0);
+        });*/
 
     } catch (error) {
         console.error('❌ Error connecting to MongoDB:', error.message);
-        process.exit(1);
+        // Do NOT exit process in serverless environment
+        // process.exit(1); 
     }
 };
 
