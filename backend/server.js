@@ -74,9 +74,11 @@ app.use((err, req, res, next) => {
 });
 
 // Start server
-const PORT = config.port;
-app.listen(PORT, () => {
-    console.log(`
+// Start server only if run directly
+if (require.main === module) {
+    const PORT = config.port;
+    app.listen(PORT, () => {
+        console.log(`
 ╔════════════════════════════════════════════╗
 ║                                            ║
 ║   🚀 To-Do List Backend Server Running    ║
@@ -86,8 +88,9 @@ app.listen(PORT, () => {
 ║   Database: MongoDB                        ║
 ║                                            ║
 ╚════════════════════════════════════════════╝
-    `);
-});
+        `);
+    });
+}
 
 // Handle unhandled promise rejections
 process.on('unhandledRejection', (err) => {
